@@ -1,0 +1,65 @@
+***FIELD- Politics*******
+#1- total contributors names-------
+SELECT ?individual ?individualLabel ?genderLabel
+WHERE {
+  ?individual wdt:P31 wd:Q5;         # Instance of human
+              wdt:P21 ?gender;       # Gender property
+              wdt:P106 wd:Q7163.   # Occupation: artist or humanist (adjust as needed)
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+ORDER BY ?gender
+-------------------------------------------------------------------------------------------------------
+#2. female contributors---
+SELECT ?person ?personLabel ?genderLabel
+WHERE {
+  ?person wdt:P31 wd:Q5;                   # Instance of human
+          wdt:P21 wd:Q6581072;             # Female gender
+          wdt:P106/wdt:P279* wd:Q7163.     # Field of science and tech
+  OPTIONAL { ?person wdt:P21 ?gender. }    # Retrieve gender property
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+ORDER BY ?personLabel
+----------------------------------------------------------------------------------------------------------
+#3.male contributors-----------
+
+SELECT ?person ?personLabel ?genderLabel
+WHERE {
+  ?person wdt:P31 wd:Q5;                   # Instance of human
+          wdt:P21 wd:Q6581097;             # Male gender
+          wdt:P106/wdt:P279* wd:Q7163.     # Field of science and technology 
+  OPTIONAL { ?person wdt:P21 ?gender. }    # Retrieve gender property
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+ORDER BY ?gender
+----------------------------------------------------------------------------------------------------------
+#4.count of all gender ------
+SELECT ?genderLabel (COUNT(?gender) as ?count)
+WHERE {
+  ?scientist wdt:P31 wd:Q5;          # Instance of human
+             wdt:P106 wd:Q7163;      # Occupation: computer scientist
+             wdt:P21 ?gender.         # Gender property
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+GROUP BY ?genderLabel
+----------------------------------------------------------------------------------------------------------
+#5.publication date-------------
+SELECT ?article ?articleLabel ?publicationDate
+WHERE {
+  ?article wdt:P31 wd:Q7163;           # Instance of scientific article
+           wdt:P585 ?publicationDate.      # Publication date property
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+ORDER BY ?publicationDate 
+---------------------------------------------------------------------------------------------------------
+#6. nationality ---------
+SELECT ?genderLabel ?nationalityLabel (COUNT(?author) as ?count)
+WHERE {
+  ?author wdt:P31 wd:Q5;                # Instance of human
+          wdt:P106 wd:Q7163;           # Occupation: computer scientist (adjust as needed)
+          wdt:P21 ?gender;              # Gender property
+          wdt:P27 ?nationality.        # Nationality property
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+GROUP BY ?genderLabel ?nationalityLabel
+
+-----------------------------------------------------------------------------------------------------------
