@@ -1,0 +1,52 @@
+***FIELD- Philosophy*****
+#1 - total all contributors in the philosophy------
+SELECT ?scientist ?scientistLabel ?genderLabel 
+WHERE {
+  ?scientist wdt:P31 wd:Q5;  # Instance of human
+             wdt:P21 ?gender;  # Gender property
+             wdt:P106 wd:Q5891.  # occupation:philosophy
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+ORDER BY ?gender
+-----------------------------------------------------------------------------------------
+#2 - female contrintions--------
+
+SELECT ?scientist ?scientistLabel ?genderLabel 
+WHERE {
+  ?scientist wdt:P31 wd:Q5;  # Instance of human
+             wdt:P21 wd:Q6581072;  # Female gender
+             wdt:P106 wd:Q5891.  # occupation: philosophy
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+----------------------------------------------------------------------------------------
+#3  - male contributions---------
+
+SELECT ?scientist ?scientistLabel ?genderLabel 
+WHERE {
+  ?scientist wdt:P31 wd:Q5;  # Instance of human
+             wdt:P21 wd:Q6581097;  # 	male gender
+             wdt:P106 wd:Q5891.  # occupation: philosophy
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+----------------------------------------------------------------------------------------
+#4- count of no of male and female contributors in this philosophy----
+SELECT ?genderLabel (COUNT(?gender) as ?count)
+WHERE {
+  ?scientist wdt:P31 wd:Q5;          # Instance of human
+             wdt:P106 wd:Q5891;      # Occupation:  philosophy
+             wdt:P21 ?gender.         # Gender property
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+GROUP BY ?genderLabel
+------------------------------------------------------------------------------------------
+#5 NAtionality of contributors based on gender and their count---- 
+SELECT ?genderLabel ?nationalityLabel (COUNT(?author) as ?count)
+WHERE {
+  ?author wdt:P31 wd:Q5;                # Instance of human
+          wdt:P106 wd:Q5891;           # Occupation:philosophy(adjust as needed)
+          wdt:P21 ?gender;              # Gender property
+          wdt:P27 ?nationality.        # Nationality property
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+GROUP BY ?genderLabel ?nationalityLabel
