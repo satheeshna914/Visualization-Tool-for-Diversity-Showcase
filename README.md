@@ -2,6 +2,10 @@
 1)Problem: It can be difficult to visualize the diversity of women's contributions across Wikipedia.
 
 2)Solution: To build a data visualization tool that showcases the breadth of women's contributions. This tool could categorize contributions by field, historical period, and other factors, allowing users to explore this data interactively.
+--Our project aims to build a data visualization tool using Wikimedia data and tools.
+--Categorizing contributions by field, historical period, and other relevant factors.
+--Providing clear visualizations of women's contributions to facilitate exploration of their impact.
+--Delving into male versus female contributions for insights into gender representation.
 
 3)Challenges: Underrepresentation of Women: Women's contributions on Wikipedia often face underrepresentation and lack of visibility, hindering the recognition of their achievements across various fields.
 
